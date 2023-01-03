@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  height: 100vh;
+  display: grid;
+  /* background-image: linear-gradient(to top left, #753682 0%, #bf2e34 100%); */
+}
+main {
+  width: 920px;
+  height: 600px;
+  background-color: blue;
+  place-self: center;
+}
+.player {
+  background-color: brown;
+}
