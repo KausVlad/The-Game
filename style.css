@@ -7,7 +7,7 @@ body {
   font-family: 'Nunito', sans-serif;
   height: 100vh;
   display: grid;
-  background-image: linear-gradient(to top left, #753682 0%, #bf2e34 100%);
+  background-image: linear-gradient(to top left, #11d375 0%, #c919fe 100%);
 }
 main {
   width: 920px;
@@ -23,18 +23,26 @@ main {
   overflow: hidden;
 }
 .player {
-  flex-basis: 50%;
+  flex: 50%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   padding: 9rem;
+  transition: all 0.75s;
 }
 .active {
   background-color: rgba(255, 255, 255, 0.4);
 }
+.active .current {
+  opacity: 1;
+}
+.active .name {
+  font-weight: 700;
+}
 .current {
-  background-color: #c7365f;
+  background-color: #d40ec3;
+  opacity: 0.8;
   border-radius: 9px;
   color: #fff;
   width: 65%;
@@ -55,7 +63,7 @@ button {
 .score {
   font-size: 8rem;
   font-weight: 300;
-  color: #c7365f;
+  color: #d40ec3;
   margin-bottom: auto;
 }
 .current-label {
@@ -107,4 +115,15 @@ button {
 }
 .btn--hold {
   top: 46.1rem;
+}
+.dice {
+  position: absolute;
+  left: 50%;
+  top: 16.5rem;
+  transform: translateX(-50%);
+  height: 10rem;
+  box-shadow: 0 2rem 5rem rgb(0 0 0 / 20%);
+}
+.hidden {
+  display: none;
 }
