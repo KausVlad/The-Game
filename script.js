@@ -11,36 +11,82 @@ const btnNew = document.querySelector('.btn--new');
 const btnRoll = document.querySelector('.btn--roll');
 const btnHold = document.querySelector('.btn--hold');
 
-//starting conditions
-score0El.textContent = 0;
-score1El.textContent = 0;
-diceEl.classList.add('hidden');
+let scores, currentScore, activePlayer, gameState;
 
-const scores = [0, 0];
-let currentScore = 0;
-let activePlayer = 0;
+//starting conditions
+const init = function () {
+  player0El.classList.remove('player--winner');
+  player1El.classList.remove('player--winner');
+  player1El.classList.remove('active');
+  player0El.classList.add('active');
+  diceEl.classList.add('hidden');
+
+  score0El.textContent = 0;
+  score1El.textContent = 0;
+  current0El.textContent = 0;
+  current1El.textContent = 0;
+
+  scores = [0, 0];
+  currentScore = 0;
+  activePlayer = 0;
+  gameState = true;
+};
+
+init();
+
+const switchPlayer = function () {
+  document.getElementById(`current--${activePlayer}`).textContent = 0;
+  currentScore = 0;
+  activePlayer = activePlayer === 0 ? 1 : 0;
+  player0El.classList.toggle('active');
+  player1El.classList.toggle('active'); //перемикання елементів active state
+};
 
 // rolling dice functionality
 btnRoll.addEventListener('click', function () {
-  // 1 generate a random dice roll
-  const dice = Math.trunc(Math.random() * 6) + 1;
+  if (gameState) {
+    // 1 generate a random dice roll
+    const dice = Math.trunc(Math.random() * 6) + 1;
 
-  // 2 display dice
-  diceEl.classList.remove('hidden');
-  diceEl.src = `./img/dice-${dice}.png`;
+    // 2 display dice
+    diceEl.classList.remove('hidden');
+    diceEl.src = `./img/dice-${dice}.png`;
 
-  // 3 check for rolled 1
-  if (dice !== 1) {
-    // add dice to current scope
-    currentScore += dice;
-    document.getElementById(`current--${activePlayer}`).textContent =
-      currentScore;
-  } else {
-    // switch to next player
-    document.getElementById(`current--${activePlayer}`).textContent = 0;
-    currentScore = 0;
-    activePlayer = activePlayer === 0 ? 1 : 0;
-    player0El.classList.toggle('active');
-    player1El.classList.toggle('active'); //перемикання елементів active state
+    // 3 check for rolled 1
+    if (dice !== 1) {
+      // add dice to current scope
+      currentScore += dice;
+      document.getElementById(`current--${activePlayer}`).textContent =
+        currentScore;
+    } else {
+      // switch to next player
+      switchPlayer();
+    }
   }
+});
+
+btnHold.addEventListener('click', function () {
+  if (gameState) {
+    //1 Add current score to active player's score
+    scores[activePlayer] += currentScore;
+    document.getElementById(`score--${activePlayer}`).textContent =
+      scores[activePlayer];
+    // 2 check if player's score is >= 100
+    if (scores[activePlayer] >= 100) {
+      gameState = false;
+      diceEl.classList.add('hidden');
+      document
+        .querySelector(`.player--${activePlayer}`)
+        .classList.add('player--winner');
+      document
+        .querySelector(`.player--${activePlayer}`)
+        .classList.remove('active');
+    } else {
+      switchPlayer();
+      // switch player
+    }
+  }
+});
+btnNew.addEventListener('click', function () {
+  init();
 });
