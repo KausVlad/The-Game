@@ -65,6 +65,7 @@ btnRoll.addEventListener('click', function () {
       // switch to next player
       switchPlayer();
       preNum = 0;
+      diceEl.classList.add('hidden');
     }
   }
 });
@@ -90,6 +91,7 @@ btnHold.addEventListener('click', function () {
       // switch player
     }
     preNum = 0;
+    diceEl.classList.add('hidden');
   }
 });
 btnNew.addEventListener('click', function () {
