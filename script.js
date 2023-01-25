@@ -11,7 +11,7 @@ const btnNew = document.querySelector('.btn--new');
 const btnRoll = document.querySelector('.btn--roll');
 const btnHold = document.querySelector('.btn--hold');
 
-let scores, currentScore, activePlayer, gameState;
+let scores, currentScore, activePlayer, gameState, preNum;
 
 //starting conditions
 const init = function () {
@@ -29,6 +29,7 @@ const init = function () {
   scores = [0, 0];
   currentScore = 0;
   activePlayer = 0;
+  preNum = 0;
   gameState = true;
 };
 
@@ -53,14 +54,17 @@ btnRoll.addEventListener('click', function () {
     diceEl.src = `./img/dice-${dice}.png`;
 
     // 3 check for rolled 1
-    if (dice !== 1) {
+    if (dice > preNum) {
       // add dice to current scope
       currentScore += dice;
       document.getElementById(`current--${activePlayer}`).textContent =
         currentScore;
+      preNum = dice;
+      console.log(preNum);
     } else {
       // switch to next player
       switchPlayer();
+      preNum = 0;
     }
   }
 });
@@ -72,7 +76,7 @@ btnHold.addEventListener('click', function () {
     document.getElementById(`score--${activePlayer}`).textContent =
       scores[activePlayer];
     // 2 check if player's score is >= 100
-    if (scores[activePlayer] >= 100) {
+    if (scores[activePlayer] >= 42) {
       gameState = false;
       diceEl.classList.add('hidden');
       document
@@ -85,6 +89,7 @@ btnHold.addEventListener('click', function () {
       switchPlayer();
       // switch player
     }
+    preNum = 0;
   }
 });
 btnNew.addEventListener('click', function () {
